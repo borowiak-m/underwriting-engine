@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"log/slog"
 	"net/http"
 )
@@ -13,4 +14,10 @@ func Make(h APIfunc) http.HandlerFunc {
 			slog.Error("HTTP API error", "err", err.Error(), "path", r.URL.Path)
 		}
 	}
+}
+
+func writeJSON(w http.ResponseWriter, status int, v any) error {
+	w.WriteHeader(status)
+	w.Header().Set("Content-type", "application/json")
+	return json.NewEncoder(w).Encode(v)
 }

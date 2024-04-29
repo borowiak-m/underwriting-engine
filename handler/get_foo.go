@@ -2,7 +2,13 @@ package handler
 
 import "net/http"
 
+type Response struct {
+	Content string
+}
+
 func HandleFoo(w http.ResponseWriter, r *http.Request) error {
-	w.Write([]byte("from HandleFoo"))
-	return nil
+	userName := Response{
+		Content: "YourName",
+	}
+	return writeJSON(w, http.StatusOK, userName)
 }
