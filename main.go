@@ -18,7 +18,7 @@ func main() {
 	}
 	PORT := envConfig["PORT"]
 	router := chi.NewMux()
-	router.Get("/foo", handler.Make(handler.HandleFoo))
+	router.Get("/customer/{id}", handler.Make(handler.GetCustomer))
 	slog.Info("API server running", "address", PORT)
 	http.ListenAndServe(PORT, router)
 }
