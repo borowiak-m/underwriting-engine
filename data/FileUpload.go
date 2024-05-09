@@ -15,7 +15,7 @@ const (
 type FileUpload struct {
 	ID         uuid.UUID      `json:"id"`
 	CustomerID uuid.UUID      `json:"customerId"`
-	Type       int            `json:"type"`
+	Type       FileType       `json:"type"`
 	Mapping    map[string]int `json:"mapping"`
 	CreatedAt  time.Time      `json:"createdAt"`
 }
