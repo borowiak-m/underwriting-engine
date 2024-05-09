@@ -20,6 +20,7 @@ func main() {
 	router := chi.NewMux()
 	router.Get("/customer/{id}", handler.Make(handler.GetCustomer))
 	router.Post("/upload", handler.Make(handler.Upload))
+	router.Post("/file", handler.Make(handler.CreateFileUpload))
 
 	// server
 	PORT := os.Getenv("PORT")
