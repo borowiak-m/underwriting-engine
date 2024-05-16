@@ -1,38 +1,16 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"log/slog"
 	"net/http"
 	"os"
 
+	"github.com/borowiak-m/underwriting-engine/db"
 	"github.com/borowiak-m/underwriting-engine/handler"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
-	"github.com/uptrace/bun"
-	"github.com/uptrace/bun/dialect/pgdialect"
-	"github.com/uptrace/bun/driver/pgdriver"
 )
-
-func getDB() *bun.DB {
-	var (
-		host     = os.Getenv("DB_HOST")
-		user     = os.Getenv("DB_USER")
-		password = os.Getenv("DB_PASSWORD")
-		name     = os.Getenv("DB_NAME")
-	)
-
-	dsn := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable",
-		user,
-		password,
-		host,
-		name)
-
-	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
-	return bun.NewDB(sqldb, pgdialect.New())
-}
 
 func main() {
 	// config
@@ -41,7 +19,7 @@ func main() {
 	}
 
 	// db
-	db := getDB()
+	db := db.Create()
 	if err := db.Ping(); err != nil {
 		log.Fatal(err)
 	}
